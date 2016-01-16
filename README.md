@@ -10,12 +10,10 @@ $ npm install zap-base-dom-ready
 
 ## Usage
 ```js
-import {
-    ready,
-} from 'zap-base-dom-ready';
+import ready from 'zap-base-dom-ready';
 ```
 
-### $
+### ready
 ```js
 ready(() => {
     // ..

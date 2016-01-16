@@ -48,6 +48,10 @@
 
 	var _zapBaseDomReady = __webpack_require__(1);
 
+	var _zapBaseDomReady2 = _interopRequireDefault(_zapBaseDomReady);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	describe('zap-base-dom-ready', function () {
 	    beforeEach(function () {});
 
@@ -55,7 +59,7 @@
 
 	    describe('should export the following', function () {
 	        it('ready', function () {
-	            expect(_zapBaseDomReady.ready).toEqual(jasmine.any(Function));
+	            expect(_zapBaseDomReady2.default).toEqual(jasmine.any(Function));
 	        });
 	    });
 
@@ -63,7 +67,7 @@
 	        it('ready should call the passed function when the dom is ready', function (done) {
 	            var innerFunctionSpy = jasmine.createSpy('innerFunctionSpy1');
 
-	            (0, _zapBaseDomReady.ready)(function () {
+	            (0, _zapBaseDomReady2.default)(function () {
 	                innerFunctionSpy();
 	            });
 
@@ -76,7 +80,7 @@
 	        it('next ready call should be called immediately', function () {
 	            var innerFunctionSpy = jasmine.createSpy('innerFunctionSpy2');
 
-	            (0, _zapBaseDomReady.ready)(function () {
+	            (0, _zapBaseDomReady2.default)(function () {
 	                innerFunctionSpy();
 	            });
 
@@ -94,7 +98,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ready = ready;
+
+	exports.default = function (fn) {
+	    if (domLoaded) {
+	        fn();
+	    } else {
+	        domLoadedFns.push(fn);
+	    }
+	};
 
 	/**
 	 * @type {HTMLDocument}
@@ -104,7 +115,7 @@
 	/**
 	 * @type {Boolean}
 	 */
-	var domLoaded = /interactive|complete|loaded/.test(document.readyState);
+	var domLoaded = document.readyState !== 'loading';
 
 	/**
 	 * @type {Array}
@@ -130,17 +141,11 @@
 	            }
 	        };
 
-	        document.addEventListener('DOMContentLoaded', domLoadedEvent, false);
+	        document.addEventListener('DOMContentLoaded', domLoadedEvent);
 	    })();
 	}
 
-	function ready(fn) {
-	    if (domLoaded) {
-	        fn();
-	    } else {
-	        domLoadedFns.push(fn);
-	    }
-	}
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

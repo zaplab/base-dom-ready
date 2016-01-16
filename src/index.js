@@ -7,7 +7,7 @@ const document = window.document;
 /**
  * @type {Boolean}
  */
-let domLoaded = /interactive|complete|loaded/.test(document.readyState);
+let domLoaded = (document.readyState !== 'loading');
 
 /**
  * @type {Array}
@@ -32,10 +32,10 @@ if (!domLoaded) {
         }
     };
 
-    document.addEventListener('DOMContentLoaded', domLoadedEvent, false);
+    document.addEventListener('DOMContentLoaded', domLoadedEvent);
 }
 
-export function ready(fn) {
+export default function (fn) {
     if (domLoaded) {
         fn();
     } else {
