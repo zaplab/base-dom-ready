@@ -1,7 +1,5 @@
 
-import {
-    ready,
-} from 'zap-base-dom-ready';
+import ready from 'zap-base-dom-ready';
 
 describe('zap-base-dom-ready', () => {
     beforeEach(() => {});

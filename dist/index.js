@@ -3,7 +3,14 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.ready = ready;
+
+exports.default = function (fn) {
+    if (domLoaded) {
+        fn();
+    } else {
+        domLoadedFns.push(fn);
+    }
+};
 
 /**
  * @type {HTMLDocument}
@@ -41,10 +48,4 @@ if (!domLoaded) {
     document.addEventListener('DOMContentLoaded', domLoadedEvent);
 }
 
-function ready(fn) {
-    if (domLoaded) {
-        fn();
-    } else {
-        domLoadedFns.push(fn);
-    }
-}
+module.exports = exports['default'];

@@ -35,7 +35,7 @@ if (!domLoaded) {
     document.addEventListener('DOMContentLoaded', domLoadedEvent);
 }
 
-export function ready(fn) {
+export default function (fn) {
     if (domLoaded) {
         fn();
     } else {
