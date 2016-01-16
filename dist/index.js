@@ -38,7 +38,7 @@ if (!domLoaded) {
         }
     };
 
-    document.addEventListener('DOMContentLoaded', domLoadedEvent, false);
+    document.addEventListener('DOMContentLoaded', domLoadedEvent);
 }
 
 function ready(fn) {

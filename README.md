@@ -15,7 +15,7 @@ import {
 } from 'zap-base-dom-ready';
 ```
 
-### $
+### ready
 ```js
 ready(() => {
     // ..

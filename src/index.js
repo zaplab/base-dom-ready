@@ -32,7 +32,7 @@ if (!domLoaded) {
         }
     };
 
-    document.addEventListener('DOMContentLoaded', domLoadedEvent, false);
+    document.addEventListener('DOMContentLoaded', domLoadedEvent);
 }
 
 export function ready(fn) {
