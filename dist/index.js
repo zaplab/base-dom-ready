@@ -13,7 +13,7 @@ const document = window.document;
 /**
  * @type {Boolean}
  */
-let domLoaded = /interactive|complete|loaded/.test(document.readyState);
+let domLoaded = document.readyState !== 'loading';
 
 /**
  * @type {Array}
