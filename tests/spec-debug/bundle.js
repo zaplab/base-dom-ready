@@ -127,7 +127,7 @@
 	        /**
 	         * @type {Function|undefined}
 	         */
-	        var domLoadedFn = undefined;
+	        var domLoadedFn = void 0;
 
 	        /**
 	         * @type {Function}
