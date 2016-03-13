@@ -54,6 +54,6 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.config.js"
+    "test": "karma start"
   }
 }
