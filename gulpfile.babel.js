@@ -8,6 +8,15 @@ import eventStream from 'event-stream';
 import gutil from 'gulp-util';
 import webpack from 'webpack';
 
+function onWarning(error) {
+    gutil.log(error);
+}
+
+function onError(error) {
+    gutil.log(error);
+    process.exit(1);
+}
+
 gulp.task('clean', gulpCallback => {
     del([
         'dist',
@@ -20,14 +29,12 @@ gulp.task('eslint', () => {
             configFile: 'tests/.eslintrc',
         }))
         .pipe(eslint.format())
-        .on('error', error => {
-            console.error('' + error);
-        });
+        .on('error', onWarning);
 });
 
 // for easier debugging of the generated spec bundle
 gulp.task('specs:debug', gulpCallback => {
-    let webpackConfig = Object.assign({}, require('./webpack.config.js'), {
+    const webpackConfig = Object.assign({}, require('./webpack.config.js'), {
         context: __dirname,
         entry: 'tests/spec/main.js',
         output: {
@@ -53,7 +60,11 @@ gulp.task('specs', gulpCallback => {
     new KarmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true,
-    }, () => {
+    }, karmaExitCode => {
+        if (karmaExitCode !== 0) {
+            process.exit(1);
+        }
+
         gulpCallback();
     }).start();
 });
@@ -96,15 +107,14 @@ gulp.task('js', [
     return gulp.src('src/*.js')
         .pipe(babel())
         .pipe(gulp.dest('dist'))
-        .on('error', error => {
-            console.error('' + error);
-        });
+        .on('error', onError);
 });
 
 gulp.task('default', [
     'clean',
 ], gulpCallback => {
     runSequence(
+        'test',
         'js',
         gulpCallback
     );
